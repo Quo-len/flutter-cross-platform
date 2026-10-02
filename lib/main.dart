@@ -118,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ElevatedButton(
               onPressed: () {
-                // Add your onPressed logic here
+                Navigator.pushNamed(context, '/second');
               },
               child: const Text('Next'),
             ),

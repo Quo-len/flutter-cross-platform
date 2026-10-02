@@ -5,6 +5,14 @@ class MySecondApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: ElevatedButton(
+        onPressed: () {
+          // Add your onPressed logic here
+          Navigator.pop(context);
+        },
+        child: const Text('Back'),
+      ),
+    );
   }
 }
