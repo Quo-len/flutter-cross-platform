@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'second.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -12,6 +14,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+
+      routes: {
+        '/': (context) => const MyHomePage(title: 'Flutter Demo Home Page'),
+        '/second': (context) => const MySecondApp(),
+      },
+
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -30,7 +38,6 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
