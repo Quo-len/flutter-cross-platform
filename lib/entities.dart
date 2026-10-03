@@ -55,3 +55,55 @@ class Post {
     return data;
   }
 }
+
+class GitTreeItem {
+  final String path;
+  final String mode;
+  final String type;
+  final String sha;
+  final String url;
+  final int? size;
+
+  GitTreeItem({
+    required this.path,
+    required this.mode,
+    required this.type,
+    required this.sha,
+    required this.url,
+    this.size,
+  });
+
+  factory GitTreeItem.fromJson(Map<String, dynamic> json) {
+    return GitTreeItem(
+      path: json['path'] as String,
+      mode: json['mode'] as String,
+      type: json['type'] as String,
+      sha: json['sha'] as String,
+      url: json['url'] as String,
+      size: json['size'] as int?,
+    );
+  }
+
+  bool get isDirectory => type == 'tree';
+}
+
+class GitTreeResponse {
+  final String sha;
+  final String url;
+  final List<GitTreeItem> tree;
+
+  GitTreeResponse({required this.sha, required this.url, required this.tree});
+
+  factory GitTreeResponse.fromJson(Map<String, dynamic> json) {
+    var rawList = json['tree'] as List<dynamic>? ?? [];
+    List<GitTreeItem> items = rawList
+        .map((item) => GitTreeItem.fromJson(item as Map<String, dynamic>))
+        .toList();
+
+    return GitTreeResponse(
+      sha: json['sha'] as String,
+      url: json['url'] as String,
+      tree: items,
+    );
+  }
+}
