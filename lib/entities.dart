@@ -1,3 +1,5 @@
+sealed class FeedItem {}
+
 class Author {
   final String name;
   final String avatarUrl;
@@ -23,7 +25,7 @@ class Author {
   }
 }
 
-class Post {
+class Post extends FeedItem {
   final int id;
   final String title;
   final String body;
@@ -53,6 +55,38 @@ class Post {
       "body": this.body,
     };
     return data;
+  }
+}
+
+class Announcement extends FeedItem {
+  final int id;
+  final String title;
+  final String message;
+  final String date;
+
+  Announcement({
+    required this.id,
+    required this.title,
+    required this.message,
+    required this.date,
+  });
+
+  factory Announcement.fromJson(Map<String, dynamic> json) {
+    return Announcement(
+      id: json['id'] as int,
+      title: json['title'] as String,
+      message: json['message'] as String,
+      date: json['date'] as String,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      "title": title,
+      "message": message,
+      "date": date,
+    };
   }
 }
 

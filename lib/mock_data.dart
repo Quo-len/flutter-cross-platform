@@ -1,6 +1,12 @@
 import 'entities.dart';
 
-final List<Post> mockPosts = [
+final List<FeedItem> mockFeed = [
+  Announcement(
+    id: 101,
+    title: 'Flutter Lab Update',
+    message: 'This feed combines Post and Announcement models via a sealed class.',
+    date: '2026-11-27',
+  ),
   Post(
     id: 1,
     title: 'Everything is a Widget',
@@ -20,6 +26,12 @@ final List<Post> mockPosts = [
       avatarUrl: 'https://ui-avatars.com/api/?name=Tim+Sneath',
       role: 'Product Lead',
     ),
+  ),
+  Announcement(
+    id: 102,
+    title: 'Tip: Pattern Matching',
+    message: 'Dart 3 switch expressions ensure every FeedItem subtype is handled.',
+    date: '2026-11-26',
   ),
   Post(
     id: 3,

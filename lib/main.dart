@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'second.dart';
 
+import 'entities.dart';
 import 'mock_data.dart';
 
 void main() {
@@ -113,37 +114,13 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(height: 12),
             Expanded(
               child: ListView.builder(
-                itemCount: mockPosts.length,
+                itemCount: mockFeed.length,
                 itemBuilder: (context, index) {
-                  final post = mockPosts[index];
-                  return Card(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    child: ListTile(
-                      leading: CircleAvatar(child: Text(post.author.name[0])),
-                      title: Text(
-                        post.title,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: 4),
-                          Text(post.body),
-                          const SizedBox(height: 4),
-                          Text(
-                            'By ${post.author.name} (${post.author.role})',
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
+                  final item = mockFeed[index];
+                  return switch (item) {
+                    Post() => _buildPostCard(item),
+                    Announcement() => _buildAnnouncementCard(item),
+                  };
                 },
               ),
             ),
@@ -155,6 +132,61 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
+      ),
+    );
+  }
+
+  Widget _buildPostCard(Post post) {
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      child: ListTile(
+        leading: CircleAvatar(child: Text(post.author.name[0])),
+        title: Text(
+          post.title,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 4),
+            Text(post.body),
+            const SizedBox(height: 4),
+            Text(
+              'By ${post.author.name} (${post.author.role})',
+              style: TextStyle(color: Colors.grey[600], fontSize: 12),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAnnouncementCard(Announcement announcement) {
+    return Card(
+      color: Theme.of(context).colorScheme.secondaryContainer,
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          foregroundColor: Theme.of(context).colorScheme.onPrimary,
+          child: const Icon(Icons.campaign),
+        ),
+        title: Text(
+          announcement.title,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 4),
+            Text(announcement.message),
+            const SizedBox(height: 4),
+            Text(
+              announcement.date,
+              style: TextStyle(color: Colors.grey[700], fontSize: 12),
+            ),
+          ],
+        ),
       ),
     );
   }
